@@ -9,6 +9,7 @@ import { loadConfig } from "../infra/config/loadConfig.js";
 import { FetchHttpClient } from "../infra/http/FetchHttpClient.js";
 import { GetEventStatusController } from "../infra/http/controllers/GetEventStatusController.js";
 import { HealthController } from "../infra/http/controllers/HealthController.js";
+import { HomeController } from "../infra/http/controllers/HomeController.js";
 import { ReceiveWebhookController } from "../infra/http/controllers/ReceiveWebhookController.js";
 import { RegisterWebhookController } from "../infra/http/controllers/RegisterWebhookController.js";
 import { StatusController } from "../infra/http/controllers/StatusController.js";
@@ -100,6 +101,7 @@ export function createApplication() {
   const server = createHttpServer({
     logger,
     routes: [
+      { method: "GET", path: "/", controller: new HomeController() },
       { method: "GET", path: "/health", controller: new HealthController() },
       { method: "GET", path: "/api/status", controller: new StatusController({ getApplicationStatusUseCase }) },
       { method: "POST", path: "/api/setup/webhook/register", controller: new RegisterWebhookController({ registerWebhookUseCase }) },
